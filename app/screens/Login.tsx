@@ -12,6 +12,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
+import { COLORS } from "../../assets/styles/colors";
 
 const style = require("../../assets/styles/defaultStyles");
 
@@ -114,8 +115,13 @@ export default function Login() {
             <>
               {!registration ? (
                 <>
-                  <Button title="Login" onPress={signIn} />
                   <Button
+                    color={COLORS.primary}
+                    title="Login"
+                    onPress={signIn}
+                  />
+                  <Button
+                    color={COLORS.transparent}
                     title="Create an account"
                     onPress={() => setRegistration(true)}
                   />

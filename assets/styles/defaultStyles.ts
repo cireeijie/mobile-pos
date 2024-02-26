@@ -25,4 +25,7 @@ module.exports = StyleSheet.create({
     backgroundColor: "#F6F6F8",
     padding: 10,
   },
+  primaryBtn: {
+    backgroundColor: "#D24545",
+  },
 });
