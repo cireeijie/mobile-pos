@@ -24,8 +24,23 @@ module.exports = StyleSheet.create({
   input: {
     backgroundColor: "#F6F6F8",
     padding: 10,
+    fontFamily: "Inter-Regular",
   },
   primaryBtn: {
     backgroundColor: "#D24545",
+  },
+  linkedText: {
+    textAlign: "center",
+    marginTop: 10,
+    fontFamily: "Inter-Regular",
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0,0,0,0.3)",
+  },
+  modal: {
+    maxWidth: 300,
   },
 });

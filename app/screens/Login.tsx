@@ -13,28 +13,27 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { COLORS } from "../../assets/styles/colors";
-
-const style = require("../../assets/styles/defaultStyles");
+import { defaults } from "../../assets/styles/exports";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [message, setMessage] = useState("");
+
   const [registration, setRegistration] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const auth = FIREBASE_AUTH;
 
   const signIn = async () => {
     setLoading(true);
+    setMessage("Logging In...");
     try {
       const response = await signInWithEmailAndPassword(auth, email, password);
       console.log(response);
-      alert("Login success!");
+      setMessage("Login success!");
     } catch (error) {
-      console.log(error);
-      alert("Signin failed.");
+      setMessage("Login failed.");
     } finally {
       setLoading(false);
     }
@@ -42,75 +41,53 @@ export default function Login() {
 
   const signUp = async () => {
     setLoading(true);
+    setMessage("Signing up...");
     try {
       const response = await createUserWithEmailAndPassword(
         auth,
         email,
         password
       );
-      alert("Signup success!");
+      setMessage("Signup success!");
     } catch (error) {
-      console.log(error);
-      alert("Signup failed.");
+      setMessage("Signup failed.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <View style={style.container}>
+    <View style={defaults.container}>
       <KeyboardAvoidingView behavior="padding">
-        <View style={style.formContainer}>
-          <Text style={style.title}>{registration ? "Register" : "Login"}</Text>
-          <View style={style.inputGroup}>
-            {registration && (
-              <>
-                <TextInput
-                  style={style.input}
-                  value={firstName}
-                  placeholder="First name"
-                  autoCapitalize="none"
-                  onChangeText={(text) => setFirstName(text)}
-                ></TextInput>
-                <TextInput
-                  style={style.input}
-                  value={lastName}
-                  placeholder="Last name"
-                  autoCapitalize="none"
-                  onChangeText={(text) => setLastName(text)}
-                ></TextInput>
-              </>
-            )}
+        <View style={defaults.formContainer}>
+          <Text style={defaults.title}>
+            {registration ? "Register" : "Login"}
+          </Text>
+          <View style={defaults.inputGroup}>
             <TextInput
-              style={style.input}
+              style={defaults.input}
               value={email}
+              placeholderTextColor={COLORS.darkGray}
               placeholder="Email"
               autoCapitalize="none"
               onChangeText={(text) => setEmail(text)}
             ></TextInput>
             <TextInput
-              style={style.input}
+              style={defaults.input}
               secureTextEntry={true}
               value={password}
+              placeholderTextColor={COLORS.darkGray}
               placeholder="Password"
               autoCapitalize="none"
               onChangeText={(text) => setPassword(text)}
             ></TextInput>
-
-            {registration && (
-              <TextInput
-                style={style.input}
-                secureTextEntry={true}
-                value={password}
-                placeholder="Confirm password"
-                autoCapitalize="none"
-                onChangeText={(text) => setPassword(text)}
-              ></TextInput>
-            )}
+            <Text style={{ textAlign: "center" }}>{message}</Text>
           </View>
 
           {loading ? (
-            <ActivityIndicator size="large" color="#0000ff" />
+            <>
+              <ActivityIndicator size="small" color={COLORS.primary} />
+            </>
           ) : (
             <>
               {!registration ? (
@@ -120,19 +97,36 @@ export default function Login() {
                     title="Login"
                     onPress={signIn}
                   />
-                  <Button
-                    color={COLORS.transparent}
-                    title="Create an account"
-                    onPress={() => setRegistration(true)}
-                  />
+                  <Text
+                    onPress={() => {
+                      setRegistration(true);
+                      setMessage("");
+                      setEmail("");
+                      setPassword("");
+                    }}
+                    style={defaults.linkedText}
+                  >
+                    Create an account
+                  </Text>
                 </>
               ) : (
                 <>
-                  <Button title="Signup" onPress={signUp} />
                   <Button
-                    title="Already have an account? Login"
-                    onPress={() => setRegistration(false)}
+                    color={COLORS.primary}
+                    title="Signup"
+                    onPress={signUp}
                   />
+                  <Text
+                    onPress={() => {
+                      setRegistration(false);
+                      setMessage("");
+                      setEmail("");
+                      setPassword("");
+                    }}
+                    style={defaults.linkedText}
+                  >
+                    Already have an account? Login
+                  </Text>
                 </>
               )}
             </>
