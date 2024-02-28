@@ -4,6 +4,7 @@ import {
   TextInput,
   Modal,
   KeyboardAvoidingView,
+  Button,
 } from "react-native";
 import React, { useState } from "react";
 import { COLORS } from "../../assets/styles/colors";
@@ -20,25 +21,26 @@ const Settings = () => {
 
   return (
     <View style={defaults.modalContainer}>
-      <Modal
-        style={defaults.modalContainer}
-        animationType="slide"
-        transparent={true}
-        visible={modalVisibility}
-      >
-        <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
-          <View style={defaults.modal}>
-            <Text>Settings</Text>
-            <TextInput
-              style={defaults.input}
-              value={username}
-              placeholderTextColor={COLORS.darkGray}
-              placeholder="Full name"
-              autoCapitalize="none"
-              onChangeText={(text) => setUsername(text)}
-            ></TextInput>
-          </View>
-        </KeyboardAvoidingView>
+      <Modal animationType="slide" transparent={true} visible={modalVisibility}>
+        <View style={defaults.modalContainer}>
+          <KeyboardAvoidingView behavior="padding">
+            <View style={defaults.modal}>
+              <Text>Settings</Text>
+              <TextInput
+                style={defaults.input}
+                value={username}
+                placeholderTextColor={COLORS.darkGray}
+                placeholder="Full name"
+                autoCapitalize="none"
+                onChangeText={(text) => setUsername(text)}
+              ></TextInput>
+              <Button
+                title="Cancel"
+                onPress={() => setModalVisibility(false)}
+              />
+            </View>
+          </KeyboardAvoidingView>
+        </View>
       </Modal>
     </View>
   );
