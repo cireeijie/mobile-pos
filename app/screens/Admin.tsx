@@ -1,26 +1,31 @@
-import { View, Text, Button } from "react-native";
-import React from "react";
-import { NavigationProp } from "@react-navigation/native";
-import { FIREBASE_AUTH } from "../../FirebaseConfig";
-import { userContext } from "../../context/exportContext";
-import Settings from "../../components/admin/Settings";
-import { defaults } from "../../assets/styles/exports";
+import { View } from "react-native";
+import React, { useEffect, useState } from "react";
 import NavigationMenu from "../../components/admin/navigation/NavigationMenu";
+import MenuContent from "../../components/admin/navigation/MenuContent";
+import { navigationMenuContext } from "../../context/useContext";
 
-interface RouterProps {
-  navigation: NavigationProp<any, any>;
-}
+const Admin = () => {
+  const [activeMenu, setActiveMenu] = useState(
+    navigationMenuContext.activeMenu[0]
+  );
 
-const Admin = ({ navigation }: RouterProps) => {
+  useEffect(() => {
+    const subscription = navigationMenuContext.subscribe(() => {
+      setActiveMenu(navigationMenuContext.activeMenu[0]);
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
+
   return (
-    <View style={{flex: 1}}>
-      <View style={{flex: 1, flexDirection: "row"}}>
+    <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, flexDirection: "row" }}>
         <NavigationMenu />
-        <View style={{flex: 1}}>
-          <Text>Welcome {userContext.userInfo.email}!</Text>
-          <Button onPress={() => FIREBASE_AUTH.signOut()} title="Logout" />
-          <Settings />
-        </View>
+        {activeMenu && activeMenu.component && (
+          <MenuContent Component={<activeMenu.component />} />
+        )}
       </View>
     </View>
   );
