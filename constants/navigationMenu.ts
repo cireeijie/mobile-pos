@@ -1,13 +1,16 @@
 import { icons } from "./icons";
-import Dashboard from "../components/admin/contents/Dashboard";
-import Checkout from "../components/admin/contents/Checkout";
-import Pending from "../components/admin/contents/Pending";
-import Products from "../components/admin/contents/Products";
-import Sales from "../components/admin/contents/Sales";
-import Settings from "../components/admin/contents/Settings";
+import Dashboard from "../components/admin/tabs/Dashboard";
+import Checkout from "../components/admin/tabs/Checkout";
+import Pending from "../components/admin/tabs/Pending";
+import Products from "../components/admin/tabs/Products";
+import Sales from "../components/admin/tabs/Sales";
+import Settings from "../components/admin/tabs/Settings";
+import Logout from "../components/admin/tabs/Logout";
+import { FIREBASE_AUTH } from "../FirebaseConfig";
 
 export const menus = [
   {
+    type: "tab",
     isActive: true,
     title: "Dashboard",
     icons: {
@@ -17,6 +20,7 @@ export const menus = [
     component: Dashboard,
   },
   {
+    type: "tab",
     isActive: false,
     title: "Checkout",
     icons: {
@@ -26,6 +30,7 @@ export const menus = [
     component: Checkout,
   },
   {
+    type: "tab",
     isActive: false,
     title: "Pending",
     icons: {
@@ -35,6 +40,7 @@ export const menus = [
     component: Pending,
   },
   {
+    type: "tab",
     isActive: false,
     title: "Products",
     icons: {
@@ -44,6 +50,7 @@ export const menus = [
     component: Products,
   },
   {
+    type: "tab",
     isActive: false,
     title: "Sales",
     icons: {
@@ -56,6 +63,7 @@ export const menus = [
 
 export const userMenus = [
   {
+    type: "user-tab",
     isActive: false,
     title: "Settings",
     icons: {
@@ -65,11 +73,12 @@ export const userMenus = [
     component: Settings,
   },
   {
+    type: "user-action",
     isActive: false,
     title: "Logout",
     icons: {
       default: icons.logout,
     },
-    component: "",
+    component: Logout,
   },
 ];

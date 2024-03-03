@@ -33,7 +33,7 @@ export default function Login() {
       console.log(response);
       setMessage("Login success!");
     } catch (error) {
-      setMessage("Login failed.");
+      setMessage("Login failed");
     } finally {
       setLoading(false);
     }
@@ -50,7 +50,7 @@ export default function Login() {
       );
       setMessage("Signup success!");
     } catch (error) {
-      setMessage("Signup failed.");
+      setMessage("Signup failed");
     } finally {
       setLoading(false);
     }

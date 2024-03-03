@@ -1,33 +1,54 @@
-import { View } from "react-native";
-import React, { useEffect, useState } from "react";
-import NavigationMenu from "../../components/admin/navigation/NavigationMenu";
-import MenuContent from "../../components/admin/navigation/MenuContent";
-import { navigationMenuContext } from "../../context/useContext";
+import React from "react";
+import { menus, userMenus } from "../../constants/navigationMenu";
+import { COLORS } from "../../assets/styles/colors";
+import MenuItem from "../../components/admin/navigation/MenuItem";
+import { sideBarNavigation } from "../../utils/sideBarNavigation";
+import Loading from "../../components/Loading";
+
+const Tab = sideBarNavigation();
 
 const Admin = () => {
-  const [activeMenu, setActiveMenu] = useState(
-    navigationMenuContext.activeMenu[0]
-  );
-
-  useEffect(() => {
-    const subscription = navigationMenuContext.subscribe(() => {
-      setActiveMenu(navigationMenuContext.activeMenu[0]);
-    });
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, []);
+  const navigationMenus = [...menus, ...userMenus];
 
   return (
-    <View style={{ flex: 1 }}>
-      <View style={{ flex: 1, flexDirection: "row" }}>
-        <NavigationMenu />
-        {activeMenu && activeMenu.component && (
-          <MenuContent Component={<activeMenu.component />} />
-        )}
-      </View>
-    </View>
+    <Tab.Navigator
+      initialRouteName="Settings"
+      screenOptions={({ route }) => ({
+        headerShown: false,
+        tabBarShowLabel: false,
+        tabBarActiveTintColor: COLORS.primary,
+        tabBarIcon: ({ focused }: { focused: any }) => {
+          const menuItem = navigationMenus.find(
+            (item) => item.title === route.name
+          );
+          if (menuItem) {
+            return (
+              <MenuItem
+                title={menuItem.title}
+                icon={menuItem.icons}
+                isActive={focused}
+                showTitle={false}
+                type={menuItem.type}
+              />
+            );
+          }
+          return null;
+        },
+      })}
+    >
+      {navigationMenus.map((item) => {
+        return (
+          <Tab.Screen
+            key={item.title}
+            name={item.title}
+            component={item.component ? item.component : Loading}
+            options={{
+              title: item.title,
+            }}
+          />
+        );
+      })}
+    </Tab.Navigator>
   );
 };
 

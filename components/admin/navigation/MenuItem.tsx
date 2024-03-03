@@ -7,7 +7,8 @@ interface MenuItemProps {
   icon: any;
   isActive?: boolean;
   showTitle: boolean;
-  menuFunction?: (title: string) => any;
+  type?: string;
+  menuFunction?: (() => void | null) | undefined;
 }
 
 const MenuItem = ({
@@ -15,11 +16,11 @@ const MenuItem = ({
   icon,
   isActive,
   showTitle,
+  type,
   menuFunction,
 }: MenuItemProps) => {
   return (
-    <Pressable
-      onPress={() => menuFunction && menuFunction(title)}
+    <View
       style={{
         padding: 15,
         borderLeftWidth: isActive ? 2 : 0,
@@ -33,7 +34,7 @@ const MenuItem = ({
         alt={title}
       />
       <Text style={!showTitle && { display: "none" }}>{title}</Text>
-    </Pressable>
+    </View>
   );
 };
 
