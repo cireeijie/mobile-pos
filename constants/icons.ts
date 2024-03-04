@@ -21,4 +21,7 @@ export const icons = {
   timeFilled: require("../assets/media/icons/time-filled.svg"),
   timeLined: require("../assets/media/icons/time-lined.svg"),
   user: require("../assets/media/icons/user.svg"),
+  userDefault: require("../assets/media/icons/user-default.svg"),
+  info: require("../assets/media/icons/info.svg"),
+  infoDefault: require("../assets/media/icons/info-default.svg"),
 };

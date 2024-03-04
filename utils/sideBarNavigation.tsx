@@ -29,8 +29,8 @@ function TabNavigator({
 
   return (
     <NavigationContent>
-      <View style={{ flexDirection: "row", height: ScreenHeight }}>
-        <View style={[{ backgroundColor: COLORS.white }, tabBarStyle]}>
+      <View style={{ flexDirection: "row", height: "100%" }}>
+        <View style={tabBarStyle}>
           <View style={{ flex: 1 }}>
             {state.routes.map(
               (route, index) =>
@@ -92,10 +92,7 @@ function TabNavigator({
           </View>
         </View>
         <View
-          style={[
-            { flex: 1, backgroundColor: COLORS.bgGray, padding: 15 },
-            contentStyle,
-          ]}
+          style={[{ flex: 1, backgroundColor: COLORS.bgGray }, contentStyle]}
         >
           {state.routes.map((route, i) => {
             return (
